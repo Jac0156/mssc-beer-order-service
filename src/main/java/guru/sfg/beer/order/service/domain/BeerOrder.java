@@ -16,20 +16,21 @@
  */
 package guru.sfg.beer.order.service.domain;
 
+import java.sql.Timestamp;
+import java.util.Set;
+import java.util.UUID;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.sql.Timestamp;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * Created by jt on 2019-01-26.
@@ -42,8 +43,8 @@ public class BeerOrder extends BaseEntity {
 
     @Builder
     public BeerOrder(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String customerRef, Customer customer,
-                     Set<BeerOrderLine> beerOrderLines, OrderStatusEnum orderStatus,
-                     String orderStatusCallbackUrl) {
+                    Set<BeerOrderLine> beerOrderLines, OrderStatusEnum orderStatus,
+                    String orderStatusCallbackUrl) {
         super(id, version, createdDate, lastModifiedDate);
         this.customerRef = customerRef;
         this.customer = customer;
