@@ -3,6 +3,7 @@ package guru.sfg.beer.order.service.web.mappers;
 import guru.sfg.beer.order.service.domain.BeerOrder;
 import guru.sfg.beer.order.service.domain.BeerOrder.BeerOrderBuilder;
 import guru.sfg.beer.order.service.domain.BeerOrderLine;
+import guru.sfg.beer.order.service.domain.Customer;
 import guru.sfg.beer.order.service.web.model.BeerOrderDto;
 import guru.sfg.beer.order.service.web.model.BeerOrderDto.BeerOrderDtoBuilder;
 import guru.sfg.beer.order.service.web.model.BeerOrderLineDto;
@@ -11,13 +12,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import javax.annotation.processing.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-15T11:21:31-0400",
+    date = "2024-09-16T15:49:17-0400",
     comments = "version: 1.3.0.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
@@ -36,6 +38,7 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
 
         BeerOrderDtoBuilder beerOrderDto = BeerOrderDto.builder();
 
+        beerOrderDto.customerId( beerOrderCustomerId( beerOrder ) );
         beerOrderDto.beerOrderLines( beerOrderLineSetToBeerOrderLineDtoList( beerOrder.getBeerOrderLines() ) );
         beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
         beerOrderDto.customerRef( beerOrder.getCustomerRef() );
@@ -72,6 +75,21 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         return beerOrder.build();
     }
 
+    private UUID beerOrderCustomerId(BeerOrder beerOrder) {
+        if ( beerOrder == null ) {
+            return null;
+        }
+        Customer customer = beerOrder.getCustomer();
+        if ( customer == null ) {
+            return null;
+        }
+        UUID id = customer.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
     protected List<BeerOrderLineDto> beerOrderLineSetToBeerOrderLineDtoList(Set<BeerOrderLine> set) {
         if ( set == null ) {
             return null;
@@ -95,9 +113,9 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         switch ( orderStatusEnum ) {
             case NEW: orderStatusEnum1 = OrderStatusEnum.NEW;
             break;
-            case READY: orderStatusEnum1 = OrderStatusEnum.READY;
-            break;
             case PICKED_UP: orderStatusEnum1 = OrderStatusEnum.PICKED_UP;
+            break;
+            case READY: orderStatusEnum1 = OrderStatusEnum.READY;
             break;
             default: throw new IllegalArgumentException( "Unexpected enum constant: " + orderStatusEnum );
         }
@@ -128,9 +146,9 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         switch ( orderStatusEnum ) {
             case NEW: orderStatusEnum1 = guru.sfg.beer.order.service.domain.OrderStatusEnum.NEW;
             break;
-            case READY: orderStatusEnum1 = guru.sfg.beer.order.service.domain.OrderStatusEnum.READY;
-            break;
             case PICKED_UP: orderStatusEnum1 = guru.sfg.beer.order.service.domain.OrderStatusEnum.PICKED_UP;
+            break;
+            case READY: orderStatusEnum1 = guru.sfg.beer.order.service.domain.OrderStatusEnum.READY;
             break;
             default: throw new IllegalArgumentException( "Unexpected enum constant: " + orderStatusEnum );
         }
