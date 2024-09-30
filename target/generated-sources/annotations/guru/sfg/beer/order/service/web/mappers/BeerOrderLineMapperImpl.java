@@ -1,19 +1,17 @@
 package guru.sfg.beer.order.service.web.mappers;
 
+import guru.sfg.beer.order.service.domain.BeerOrderLine;
+import guru.sfg.beer.order.service.web.model.BeerOrderLineDto;
 import javax.annotation.processing.Generated;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import guru.sfg.beer.order.service.domain.BeerOrderLine;
-import guru.sfg.beer.order.service.web.model.BeerOrderLineDto;
-
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-25T21:56:16-0400",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.4 (Eclipse Adoptium)"
+    date = "2024-09-30T15:28:53-0400",
+    comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 @Primary

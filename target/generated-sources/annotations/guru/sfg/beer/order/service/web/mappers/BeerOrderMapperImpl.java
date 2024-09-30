@@ -1,27 +1,24 @@
 package guru.sfg.beer.order.service.web.mappers;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.annotation.processing.Generated;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import guru.sfg.beer.order.service.domain.BeerOrder;
 import guru.sfg.beer.order.service.domain.BeerOrderLine;
 import guru.sfg.beer.order.service.domain.Customer;
 import guru.sfg.beer.order.service.web.model.BeerOrderDto;
 import guru.sfg.beer.order.service.web.model.BeerOrderLineDto;
 import guru.sfg.beer.order.service.web.model.OrderStatusEnum;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-25T21:56:15-0400",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.4 (Eclipse Adoptium)"
+    date = "2024-09-30T15:28:54-0400",
+    comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class BeerOrderMapperImpl implements BeerOrderMapper {
@@ -40,16 +37,16 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         BeerOrderDto.BeerOrderDtoBuilder beerOrderDto = BeerOrderDto.builder();
 
         beerOrderDto.customerId( beerOrderCustomerId( beerOrder ) );
+        beerOrderDto.beerOrderLines( beerOrderLineSetToBeerOrderLineDtoList( beerOrder.getBeerOrderLines() ) );
+        beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
+        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
         beerOrderDto.id( beerOrder.getId() );
+        beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
+        beerOrderDto.orderStatus( orderStatusEnumToOrderStatusEnum( beerOrder.getOrderStatus() ) );
+        beerOrderDto.orderStatusCallbackUrl( beerOrder.getOrderStatusCallbackUrl() );
         if ( beerOrder.getVersion() != null ) {
             beerOrderDto.version( beerOrder.getVersion().intValue() );
         }
-        beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
-        beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
-        beerOrderDto.beerOrderLines( beerOrderLineSetToBeerOrderLineDtoList( beerOrder.getBeerOrderLines() ) );
-        beerOrderDto.orderStatus( orderStatusEnumToOrderStatusEnum( beerOrder.getOrderStatus() ) );
-        beerOrderDto.orderStatusCallbackUrl( beerOrder.getOrderStatusCallbackUrl() );
-        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
 
         return beerOrderDto.build();
     }
@@ -62,16 +59,16 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
 
         BeerOrder.BeerOrderBuilder beerOrder = BeerOrder.builder();
 
+        beerOrder.beerOrderLines( beerOrderLineDtoListToBeerOrderLineSet( dto.getBeerOrderLines() ) );
+        beerOrder.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
+        beerOrder.customerRef( dto.getCustomerRef() );
         beerOrder.id( dto.getId() );
+        beerOrder.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
+        beerOrder.orderStatus( orderStatusEnumToOrderStatusEnum1( dto.getOrderStatus() ) );
+        beerOrder.orderStatusCallbackUrl( dto.getOrderStatusCallbackUrl() );
         if ( dto.getVersion() != null ) {
             beerOrder.version( dto.getVersion().longValue() );
         }
-        beerOrder.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
-        beerOrder.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
-        beerOrder.customerRef( dto.getCustomerRef() );
-        beerOrder.beerOrderLines( beerOrderLineDtoListToBeerOrderLineSet( dto.getBeerOrderLines() ) );
-        beerOrder.orderStatus( orderStatusEnumToOrderStatusEnum1( dto.getOrderStatus() ) );
-        beerOrder.orderStatusCallbackUrl( dto.getOrderStatusCallbackUrl() );
 
         return beerOrder.build();
     }

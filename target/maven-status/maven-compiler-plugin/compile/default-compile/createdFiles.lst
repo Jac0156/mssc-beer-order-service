@@ -28,13 +28,11 @@ guru\sfg\beer\order\service\services\beer\model\BeerDto.class
 guru\sfg\beer\order\service\web\model\OrderStatusEnum.class
 guru\sfg\beer\order\service\repositories\BeerOrderRepository.class
 guru\sfg\beer\order\service\web\model\OrderStatusUpdate$OrderStatusUpdateBuilder.class
-guru\sfg\beer\order\service\web\mappers\BeerOrderMapper.class
 guru\sfg\beer\order\service\web\model\OrderStatusUpdate.class
 guru\sfg\beer\order\service\web\mappers\BeerOrderLineMapper.class
 guru\sfg\beer\order\service\web\mappers\BeerOrderLineMapperImpl.class
 guru\sfg\beer\order\service\web\model\BeerOrderDto$BeerOrderDtoBuilder.class
 guru\sfg\beer\order\service\domain\BeerOrderLine.class
-guru\sfg\beer\order\service\services\BeerOrderServiceImpl.class
 guru\sfg\beer\order\service\web\model\CustomerDto.class
 guru\sfg\beer\order\service\domain\BaseEntity.class
 guru\sfg\beer\order\service\web\mappers\BeerOrderLineMapperImpl_.class
