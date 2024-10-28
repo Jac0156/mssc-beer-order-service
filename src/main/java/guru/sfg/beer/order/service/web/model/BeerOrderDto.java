@@ -45,6 +45,6 @@ public class BeerOrderDto extends BaseItem {
     private UUID customerId;
     private String customerRef;
     private List<BeerOrderLineDto> beerOrderLines;
-    private BeerOrderStatusEnum orderStatus;
+    private String orderStatus;
     private String orderStatusCallbackUrl;
 }
