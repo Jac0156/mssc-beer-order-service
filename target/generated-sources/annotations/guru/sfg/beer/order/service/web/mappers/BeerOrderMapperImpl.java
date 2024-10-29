@@ -6,7 +6,6 @@ import guru.sfg.beer.order.service.domain.BeerOrderStatusEnum;
 import guru.sfg.beer.order.service.domain.Customer;
 import guru.sfg.beer.order.service.web.model.BeerOrderDto;
 import guru.sfg.beer.order.service.web.model.BeerOrderLineDto;
-import guru.sfg.beer.order.service.web.model.BeerOrderStatusEnum;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-28T15:53:50-0400",
+    date = "2024-10-28T16:17:23-0400",
     comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
@@ -43,7 +42,9 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         beerOrderDto.customerRef( beerOrder.getCustomerRef() );
         beerOrderDto.id( beerOrder.getId() );
         beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
-        beerOrderDto.orderStatus( beerOrderStatusEnumToOrderStatusEnum( beerOrder.getOrderStatus() ) );
+        if ( beerOrder.getOrderStatus() != null ) {
+            beerOrderDto.orderStatus( beerOrder.getOrderStatus().name() );
+        }
         beerOrderDto.orderStatusCallbackUrl( beerOrder.getOrderStatusCallbackUrl() );
         if ( beerOrder.getVersion() != null ) {
             beerOrderDto.version( beerOrder.getVersion().intValue() );
@@ -65,7 +66,9 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         beerOrder.customerRef( dto.getCustomerRef() );
         beerOrder.id( dto.getId() );
         beerOrder.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
-        beerOrder.orderStatus( orderStatusEnumToBeerOrderStatusEnum( dto.getOrderStatus() ) );
+        if ( dto.getOrderStatus() != null ) {
+            beerOrder.orderStatus( Enum.valueOf( BeerOrderStatusEnum.class, dto.getOrderStatus() ) );
+        }
         beerOrder.orderStatusCallbackUrl( dto.getOrderStatusCallbackUrl() );
         if ( dto.getVersion() != null ) {
             beerOrder.version( dto.getVersion().longValue() );
@@ -95,26 +98,6 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         return list;
     }
 
-    protected BeerOrderStatusEnum beerOrderStatusEnumToOrderStatusEnum(BeerOrderStatusEnum beerOrderStatusEnum) {
-        if ( beerOrderStatusEnum == null ) {
-            return null;
-        }
-
-        BeerOrderStatusEnum orderStatusEnum;
-
-        switch ( beerOrderStatusEnum ) {
-            case NEW: orderStatusEnum = BeerOrderStatusEnum.NEW;
-            break;
-            case PICKED_UP: orderStatusEnum = BeerOrderStatusEnum.PICKED_UP;
-            break;
-            case READY: orderStatusEnum = BeerOrderStatusEnum.READY;
-            break;
-            default: throw new IllegalArgumentException( "Unexpected enum constant: " + beerOrderStatusEnum );
-        }
-
-        return orderStatusEnum;
-    }
-
     protected Set<BeerOrderLine> beerOrderLineDtoListToBeerOrderLineSet(List<BeerOrderLineDto> list) {
         if ( list == null ) {
             return null;
@@ -126,25 +109,5 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         }
 
         return set;
-    }
-
-    protected BeerOrderStatusEnum orderStatusEnumToBeerOrderStatusEnum(BeerOrderStatusEnum orderStatusEnum) {
-        if ( orderStatusEnum == null ) {
-            return null;
-        }
-
-        BeerOrderStatusEnum beerOrderStatusEnum;
-
-        switch ( orderStatusEnum ) {
-            case NEW: beerOrderStatusEnum = BeerOrderStatusEnum.NEW;
-            break;
-            case PICKED_UP: beerOrderStatusEnum = BeerOrderStatusEnum.PICKED_UP;
-            break;
-            case READY: beerOrderStatusEnum = BeerOrderStatusEnum.READY;
-            break;
-            default: throw new IllegalArgumentException( "Unexpected enum constant: " + orderStatusEnum );
-        }
-
-        return beerOrderStatusEnum;
     }
 }
