@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-30T12:11:48-0400",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2024-10-30T15:20:22-0400",
+    comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class BeerOrderMapperImpl implements BeerOrderMapper {
@@ -37,18 +37,18 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         BeerOrderDto.BeerOrderDtoBuilder beerOrderDto = BeerOrderDto.builder();
 
         beerOrderDto.customerId( beerOrderCustomerId( beerOrder ) );
-        beerOrderDto.id( beerOrder.getId() );
-        if ( beerOrder.getVersion() != null ) {
-            beerOrderDto.version( beerOrder.getVersion().intValue() );
-        }
-        beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
-        beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
-        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
         beerOrderDto.beerOrderLines( beerOrderLineSetToBeerOrderLineDtoList( beerOrder.getBeerOrderLines() ) );
+        beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
+        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
+        beerOrderDto.id( beerOrder.getId() );
+        beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
         if ( beerOrder.getOrderStatus() != null ) {
             beerOrderDto.orderStatus( beerOrder.getOrderStatus().name() );
         }
         beerOrderDto.orderStatusCallbackUrl( beerOrder.getOrderStatusCallbackUrl() );
+        if ( beerOrder.getVersion() != null ) {
+            beerOrderDto.version( beerOrder.getVersion().intValue() );
+        }
 
         return beerOrderDto.build();
     }
@@ -61,18 +61,18 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
 
         BeerOrder.BeerOrderBuilder beerOrder = BeerOrder.builder();
 
-        beerOrder.id( dto.getId() );
-        if ( dto.getVersion() != null ) {
-            beerOrder.version( dto.getVersion().longValue() );
-        }
-        beerOrder.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
-        beerOrder.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
-        beerOrder.customerRef( dto.getCustomerRef() );
         beerOrder.beerOrderLines( beerOrderLineDtoListToBeerOrderLineSet( dto.getBeerOrderLines() ) );
+        beerOrder.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
+        beerOrder.customerRef( dto.getCustomerRef() );
+        beerOrder.id( dto.getId() );
+        beerOrder.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
         if ( dto.getOrderStatus() != null ) {
             beerOrder.orderStatus( Enum.valueOf( BeerOrderStatusEnum.class, dto.getOrderStatus() ) );
         }
         beerOrder.orderStatusCallbackUrl( dto.getOrderStatusCallbackUrl() );
+        if ( dto.getVersion() != null ) {
+            beerOrder.version( dto.getVersion().longValue() );
+        }
 
         return beerOrder.build();
     }
