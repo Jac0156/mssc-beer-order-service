@@ -11,6 +11,7 @@ import guru.sfg.beer.order.service.domain.BeerOrder;
 import guru.sfg.beer.order.service.domain.BeerOrderEventEnum;
 import guru.sfg.beer.order.service.domain.BeerOrderStatusEnum;
 import guru.sfg.beer.order.service.repositories.BeerOrderRepository;
+import guru.sfg.beer.order.service.sm.BeerOrderStateChangeInterceptor;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -18,8 +19,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class BeerOrderManagerImpl implements BeerOrderManager{
 
+    public final static String BEER_ID_HEADER = "beer_id"; 
+
     private final StateMachineFactory<BeerOrderStatusEnum, BeerOrderEventEnum> stateMachineFactory;
     private final BeerOrderRepository beerOrderRepository;
+    private final BeerOrderStateChangeInterceptor beerOrderStateChangeInterceptor;
 
     @Transactional
     @Override
@@ -40,6 +44,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager{
         sm.sendEvent(Mono.just(
                 MessageBuilder
                     .withPayload(eventEnum)
+                    .setHeader(BEER_ID_HEADER, beerOrder.getId().toString())
                     .build()))
                 .subscribe();
     }
@@ -51,6 +56,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager{
         sm.stopReactively().block();
         sm.getStateMachineAccessor()
         .doWithAllRegions(sma -> {
+            sma.addStateMachineInterceptor(beerOrderStateChangeInterceptor);
             sma.resetStateMachineReactively(new
             DefaultStateMachineContext<BeerOrderStatusEnum,BeerOrderEventEnum>(beerOrder.getOrderStatus(), null, null, null)).block();
         });
