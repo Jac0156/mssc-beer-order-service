@@ -8,7 +8,7 @@ import guru.sfg.brewery.model.BeerOrderLineDto;
 
 @Mapper(uses = {DateMapper.class})
 @DecoratedWith(BeerOrderLineMapperDecorator.class)
-public interface BeerOrderLineMapper {
+public interface BeerOrderLineMapper { 
         
     BeerOrderLineDto beerOrderLineToDto(BeerOrderLine line);
 
