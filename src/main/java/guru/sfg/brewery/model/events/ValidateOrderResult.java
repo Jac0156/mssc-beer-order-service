@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ValidateOrderResult {
 
-    private UUID orderId;
+    private UUID orderId; 
     private Boolean isValid;
 }
