@@ -57,6 +57,8 @@ public class BeerOrderLineDto {
     private String beerName;
     private String beerStyle;
     private UUID beerId;
+    @Builder.Default
     private Integer orderQuantity = 0;
+    private Integer quantityAllocated;
     private BigDecimal price;
 }
