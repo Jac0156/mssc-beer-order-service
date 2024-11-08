@@ -24,10 +24,11 @@ import guru.sfg.beer.order.service.domain.BeerOrder;
 import guru.sfg.brewery.model.BeerOrderDto;
 
 @Mapper(uses = {DateMapper.class, BeerOrderLineMapper.class})
-public interface BeerOrderMapper {
+public interface BeerOrderMapper { 
 
     @Mapping(target = "customerId", source = "customer.id")
     BeerOrderDto beerOrderToDto(BeerOrder beerOrder);
 
+    @Mapping(target = "customer.id", source = "customerId")
     BeerOrder dtoToBeerOrder(BeerOrderDto dto);
 }
