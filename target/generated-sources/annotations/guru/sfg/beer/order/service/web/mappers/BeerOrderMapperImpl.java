@@ -35,18 +35,18 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         BeerOrderDto.BeerOrderDtoBuilder beerOrderDto = BeerOrderDto.builder();
 
         beerOrderDto.customerId( beerOrderCustomerId( beerOrder ) );
-        beerOrderDto.id( beerOrder.getId() );
-        if ( beerOrder.getVersion() != null ) {
-            beerOrderDto.version( beerOrder.getVersion().intValue() );
-        }
-        beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
-        beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
-        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
         beerOrderDto.beerOrderLines( beerOrderLineSetToBeerOrderLineDtoList( beerOrder.getBeerOrderLines() ) );
+        beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
+        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
+        beerOrderDto.id( beerOrder.getId() );
+        beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
         if ( beerOrder.getOrderStatus() != null ) {
             beerOrderDto.orderStatus( beerOrder.getOrderStatus().name() );
         }
         beerOrderDto.orderStatusCallbackUrl( beerOrder.getOrderStatusCallbackUrl() );
+        if ( beerOrder.getVersion() != null ) {
+            beerOrderDto.version( beerOrder.getVersion().intValue() );
+        }
 
         return beerOrderDto.build();
     }
@@ -60,18 +60,18 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         BeerOrder.BeerOrderBuilder beerOrder = BeerOrder.builder();
 
         beerOrder.customer( beerOrderDtoToCustomer( dto ) );
-        beerOrder.id( dto.getId() );
-        if ( dto.getVersion() != null ) {
-            beerOrder.version( dto.getVersion().longValue() );
-        }
-        beerOrder.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
-        beerOrder.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
-        beerOrder.customerRef( dto.getCustomerRef() );
         beerOrder.beerOrderLines( beerOrderLineDtoListToBeerOrderLineSet( dto.getBeerOrderLines() ) );
+        beerOrder.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
+        beerOrder.customerRef( dto.getCustomerRef() );
+        beerOrder.id( dto.getId() );
+        beerOrder.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
         if ( dto.getOrderStatus() != null ) {
             beerOrder.orderStatus( Enum.valueOf( BeerOrderStatusEnum.class, dto.getOrderStatus() ) );
         }
         beerOrder.orderStatusCallbackUrl( dto.getOrderStatusCallbackUrl() );
+        if ( dto.getVersion() != null ) {
+            beerOrder.version( dto.getVersion().longValue() );
+        }
 
         return beerOrder.build();
     }
@@ -114,7 +114,7 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
             return null;
         }
 
-        Set<BeerOrderLine> set = LinkedHashSet.newLinkedHashSet( list.size() );
+        Set<BeerOrderLine> set = new LinkedHashSet<BeerOrderLine>( Math.max( (int) ( list.size() / .75f ) + 1, 16 ) );
         for ( BeerOrderLineDto beerOrderLineDto : list ) {
             set.add( beerOrderLineMapper.dtoToBeerOrderLine( beerOrderLineDto ) );
         }

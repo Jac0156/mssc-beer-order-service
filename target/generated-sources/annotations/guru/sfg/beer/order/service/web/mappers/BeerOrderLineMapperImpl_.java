@@ -25,16 +25,16 @@ public class BeerOrderLineMapperImpl_ implements BeerOrderLineMapper {
 
         BeerOrderLineDto.BeerOrderLineDtoBuilder beerOrderLineDto = BeerOrderLineDto.builder();
 
+        beerOrderLineDto.beerId( line.getBeerId() );
+        beerOrderLineDto.createdDate( dateMapper.asOffsetDateTime( line.getCreatedDate() ) );
         beerOrderLineDto.id( line.getId() );
+        beerOrderLineDto.lastModifiedDate( dateMapper.asOffsetDateTime( line.getLastModifiedDate() ) );
+        beerOrderLineDto.orderQuantity( line.getOrderQuantity() );
+        beerOrderLineDto.quantityAllocated( line.getQuantityAllocated() );
+        beerOrderLineDto.upc( line.getUpc() );
         if ( line.getVersion() != null ) {
             beerOrderLineDto.version( line.getVersion().intValue() );
         }
-        beerOrderLineDto.createdDate( dateMapper.asOffsetDateTime( line.getCreatedDate() ) );
-        beerOrderLineDto.lastModifiedDate( dateMapper.asOffsetDateTime( line.getLastModifiedDate() ) );
-        beerOrderLineDto.upc( line.getUpc() );
-        beerOrderLineDto.beerId( line.getBeerId() );
-        beerOrderLineDto.orderQuantity( line.getOrderQuantity() );
-        beerOrderLineDto.quantityAllocated( line.getQuantityAllocated() );
 
         return beerOrderLineDto.build();
     }
@@ -47,16 +47,16 @@ public class BeerOrderLineMapperImpl_ implements BeerOrderLineMapper {
 
         BeerOrderLine.BeerOrderLineBuilder beerOrderLine = BeerOrderLine.builder();
 
+        beerOrderLine.beerId( dto.getBeerId() );
+        beerOrderLine.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
         beerOrderLine.id( dto.getId() );
+        beerOrderLine.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
+        beerOrderLine.orderQuantity( dto.getOrderQuantity() );
+        beerOrderLine.quantityAllocated( dto.getQuantityAllocated() );
+        beerOrderLine.upc( dto.getUpc() );
         if ( dto.getVersion() != null ) {
             beerOrderLine.version( dto.getVersion().longValue() );
         }
-        beerOrderLine.createdDate( dateMapper.asTimestamp( dto.getCreatedDate() ) );
-        beerOrderLine.lastModifiedDate( dateMapper.asTimestamp( dto.getLastModifiedDate() ) );
-        beerOrderLine.beerId( dto.getBeerId() );
-        beerOrderLine.upc( dto.getUpc() );
-        beerOrderLine.orderQuantity( dto.getOrderQuantity() );
-        beerOrderLine.quantityAllocated( dto.getQuantityAllocated() );
 
         return beerOrderLine.build();
     }
