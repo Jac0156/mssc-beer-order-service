@@ -33,14 +33,11 @@ public class BeerPagedList extends PageImpl<BeerDto> {
 
     public BeerPagedList(List<BeerDto> content, Pageable pageable, long total) {
         super(content, pageable, total);
-        //TODO Auto-generated constructor stub
     }
 
-    public BeerPagedList(List<BeerDto> content) {
-        super(content);
-        //TODO Auto-generated constructor stub
+    public BeerPagedList(List<BeerDto> list) {
+        super(list);
     }
-
 
 
 }

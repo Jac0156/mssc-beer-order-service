@@ -15,6 +15,7 @@ import guru.sfg.beer.order.service.domain.BeerOrderEventEnum;
 import guru.sfg.beer.order.service.domain.BeerOrderStatusEnum;
 import guru.sfg.beer.order.service.repositories.BeerOrderRepository;
 import guru.sfg.beer.order.service.services.BeerOrderManagerImpl;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,7 @@ public class BeerOrderStateChangeInterceptor extends
             
     private final BeerOrderRepository beerOrderRepository;
 
+    @Transactional
     @Override
     public void preStateChange(State<BeerOrderStatusEnum, BeerOrderEventEnum> state,
             Message<BeerOrderEventEnum> message, 
@@ -33,6 +35,8 @@ public class BeerOrderStateChangeInterceptor extends
             StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> stateMachine,
             StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> rootStateMachine) {
 
+        log.debug("Pre-State Change");
+        
         Optional.ofNullable(message).ifPresent(msg -> {
             Optional.ofNullable(
                     (String) (msg.getHeaders().getOrDefault(BeerOrderManagerImpl.BEER_ID_HEADER, " ")))

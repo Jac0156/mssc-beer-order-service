@@ -21,7 +21,7 @@ public class BeerOrderAllocationResultListener {
 
         if (!result.getAllocationError() && !result.getPendingInventory()) {
             // allocated normally
-            beerOrderManager.beerOrderAllocationsPassed(result.getBeerOrderDto());
+            beerOrderManager.beerOrderAllocationPassed(result.getBeerOrderDto());
         } else if (!result.getAllocationError() && result.getPendingInventory()) {
             // pending inventory 
             beerOrderManager.beerOrderAllocationPendingInventory(result.getBeerOrderDto());
